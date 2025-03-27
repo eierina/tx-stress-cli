@@ -30,7 +30,8 @@ npm link
 ### Global Installation (from npm)
 
 ```bash
-npm install -g txstress
+npm pack
+npm install -g .
 ```
 
 ## Usage
