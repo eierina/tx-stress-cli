@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import { slowCommand } from './commands/slow';
 import { timedCommand } from './commands/timed';
 import { burstCommand } from './commands/burst';
+import { fundCommand } from './commands/fund';
+import { refundCommand } from './commands/refund';
 const version = '0.1.0';
 import chalk from 'chalk';
 
@@ -53,6 +55,26 @@ program
   .option('-g, --gas-limit <number>', 'Gas limit for transactions', '21000')
   .option('-m, --manual-nonce', 'Enable manual nonce management for high-throughput scenarios', false)
   .action(burstCommand);
+
+program
+  .command('fund')
+  .description('Fund all accounts in keys file from a primary account')
+  .requiredOption('-n, --node <url>', 'Blockchain node URL')
+  .requiredOption('-k, --keys <path>', 'Path to file containing private keys to fund, one per line')
+  .requiredOption('--from-pk <privateKey>', 'Private key of the funding account')
+  .option('-p, --percent <number>', 'Percentage of funding account\'s balance to distribute (1-100)', '90')
+  .option('-g, --gas-limit <number>', 'Gas limit for transactions', '21000')
+  .action(fundCommand);
+
+program
+  .command('refund')
+  .description('Refund balances from all accounts in keys file to a target address')
+  .requiredOption('-n, --node <url>', 'Blockchain node URL')
+  .requiredOption('-k, --keys <path>', 'Path to file containing private keys, one per line')
+  .requiredOption('--to <address>', 'Address to send all funds to')
+  .option('-p, --percent <number>', 'Percentage of each account\'s balance to transfer (1-100)', '100')
+  .option('-g, --gas-limit <number>', 'Gas limit for transactions', '21000')
+  .action(refundCommand);
 
 program.parse(process.argv);
 
