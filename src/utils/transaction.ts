@@ -101,23 +101,54 @@ export class TransactionTracker {
   }
 }
 
+// Cache for storing the latest nonce for each address
+const nonceCache = new Map<string, number>();
+
 export async function sendTransaction(
   provider: ethers.providers.JsonRpcProvider,
   wallet: ethers.Wallet,
   to: string,
   value: string,
-  tracker: TransactionTracker
+  tracker: TransactionTracker,
+  manualNonce: boolean = false,
+  gasLimit: number = 21000
 ): Promise<string> {
   try {
     // For JsonRpcProvider, we can get the gas price
     const gasPrice = await provider.getFeeData().then((fees: any) => fees.gasPrice);
     
-    const tx = await wallet.sendTransaction({
+    // Transaction options
+    const txOptions: ethers.providers.TransactionRequest = {
       to,
       value: ethers.utils.parseEther(value),
       gasPrice,
-      gasLimit: 21000, // Simple ETH transfer
-    });
+      gasLimit: gasLimit, // Use the provided gas limit
+    };
+    
+    // Handle manual nonce management if enabled
+    if (manualNonce) {
+      const address = wallet.address;
+      
+      // Get current on-chain nonce
+      const onChainNonce = await provider.getTransactionCount(address, 'pending');
+      
+      // Get our cached nonce or initialize it if not present
+      let nextNonce = nonceCache.get(address) || onChainNonce;
+      
+      // Use the higher value between cached and on-chain nonce
+      nextNonce = Math.max(nextNonce, onChainNonce);
+      
+      // Set the nonce for this transaction
+      txOptions.nonce = nextNonce;
+      
+      // Update the cache for next transaction from this address
+      nonceCache.set(address, nextNonce + 1);
+      
+      console.log(chalk.blue(`Using manual nonce ${nextNonce} for ${address.substring(0, 8)}...`));
+    }
+    
+    // Send the transaction
+    const tx = await wallet.sendTransaction(txOptions);
     
     tracker.addTransaction(tx.hash);
     return tx.hash;

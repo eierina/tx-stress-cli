@@ -24,6 +24,8 @@ program
   .option('-c, --count <number>', 'Number of transactions to send', '10')
   .option('-t, --to <address>', 'Recipient address', '0x0000000000000000000000000000000000000000')
   .option('-v, --value <amount>', 'Amount of native token to send per transaction', '0.001')
+  .option('-g, --gas-limit <number>', 'Gas limit for transactions', '21000')
+  .option('-m, --manual-nonce', 'Enable manual nonce management for high-throughput scenarios', false)
   .action(slowCommand);
 
 program
@@ -34,6 +36,8 @@ program
   .option('-c, --count <number>', 'Number of transactions to send', '10')
   .option('-t, --to <address>', 'Recipient address', '0x0000000000000000000000000000000000000000')
   .option('-v, --value <amount>', 'Amount of native token to send per transaction', '0.001')
+  .option('-g, --gas-limit <number>', 'Gas limit for transactions', '21000')
+  .option('-m, --manual-nonce', 'Enable manual nonce management for high-throughput scenarios', false)
   .action(timedCommand);
 
 program
@@ -46,6 +50,8 @@ program
   .option('-v, --value <amount>', 'Amount of native token to send per transaction', '0.001')
   .option('-d, --delay <ms>', 'Delay between batches in ms', '0')
   .option('-b, --batch-size <number>', 'Number of transactions in each batch', '5')
+  .option('-g, --gas-limit <number>', 'Gas limit for transactions', '21000')
+  .option('-m, --manual-nonce', 'Enable manual nonce management for high-throughput scenarios', false)
   .action(burstCommand);
 
 program.parse(process.argv);

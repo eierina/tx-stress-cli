@@ -70,6 +70,8 @@ txstress burst --node <RPC_URL> --keys <KEY_FILE> --count 50 --batch-size 5 --de
 - `--count <number>`: Number of transactions to send (default: 10)
 - `--to <address>`: Recipient address (default: zero address)
 - `--value <amount>`: Amount of native token to send per transaction (default: 0.001)
+- `--gas-limit <number>`, `-g`: Gas limit for transactions (default: 21000)
+- `--manual-nonce`, `-m`: Enable manual nonce management for high-throughput scenarios (default: false)
 
 ### Additional Options for Burst Mode
 
@@ -93,8 +95,18 @@ txstress timed --node https://sepolia.infura.io/v3/YOUR_API_KEY --keys ./keys.tx
 ### Burst Mode
 
 ```bash
-txstress burst --node https://sepolia.infura.io/v3/YOUR_API_KEY --keys ./keys.txt --count 20 --batch-size 5 --delay 100 --to 0x742d35Cc6634C0532925a3b844Bc454e4438f44e --value 0.0001
+txstress burst --node https://sepolia.infura.io/v3/YOUR_API_KEY --keys ./keys.txt --count 20 --batch-size 5 --delay 100 --to 0x742d35Cc6634C0532925a3b844Bc454e4438f44e --value 0.0001 --manual-nonce
 ```
+
+### Using Manual Nonce Management
+
+For high-throughput scenarios, especially when sending many transactions in burst mode, enable manual nonce management to avoid "nonce too low" errors:
+
+```bash
+txstress burst --node <RPC_URL> --keys <KEY_FILE> --count 50 --batch-size 10 --manual-nonce
+```
+
+This feature maintains a local nonce counter for each wallet address, ensuring each transaction uses the correct nonce even when sending transactions rapidly.
 
 ## Development
 

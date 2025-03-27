@@ -12,6 +12,8 @@ interface BurstCommandOptions {
   value: string;
   delay: string;
   batchSize: string;
+  manualNonce: boolean;
+  gasLimit: string;
 }
 
 export async function burstCommand(options: BurstCommandOptions): Promise<void> {
@@ -22,6 +24,8 @@ export async function burstCommand(options: BurstCommandOptions): Promise<void> 
   console.log(chalk.gray(`Value per tx: ${options.value} ETH`));
   console.log(chalk.gray(`Batch size: ${options.batchSize}`));
   console.log(chalk.gray(`Delay between batches: ${options.delay}ms`));
+  console.log(chalk.gray(`Gas limit: ${options.gasLimit}`));
+  console.log(chalk.gray(`Manual nonce management: ${options.manualNonce ? 'Enabled' : 'Disabled'}`));
 
   try {
     // Connect to the provider
@@ -74,7 +78,9 @@ export async function burstCommand(options: BurstCommandOptions): Promise<void> 
             wallet.wallet, 
             options.to, 
             options.value,
-            txTracker
+            txTracker,
+            options.manualNonce,
+            parseInt(options.gasLimit, 10)
           ).catch(err => {
             console.error(chalk.red(`Error sending tx: ${err.message}`));
             return null;
