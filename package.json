@@ -1,0 +1,39 @@
+{
+  "name": "txstress",
+  "version": "0.1.0",
+  "description": "A CLI tool for stress testing blockchain nodes",
+  "main": "dist/index.js",
+  "bin": {
+    "txstress": "./bin/txstress.js"
+  },
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "blockchain",
+    "stress-test",
+    "ethereum",
+    "testnet"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.4.1",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

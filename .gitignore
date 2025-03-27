@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnpm-debug.log
+
+# Build output
+dist/
+build/
+lib/
+
+# TypeScript
+*.tsbuildinfo
+
+# Package files
+*.tgz
+*.tar.gz
+*.zip
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+
+# Keys (to prevent accidental commit of actual private keys)
+keys.txt

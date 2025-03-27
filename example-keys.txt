@@ -1,0 +1,7 @@
+# Example private keys file for txstress
+# Replace these with your own private keys (one per line)
+# DO NOT use these keys on mainnet - they are for testing only
+# Lines starting with # are ignored
+
+0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
