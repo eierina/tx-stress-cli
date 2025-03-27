@@ -1,4 +1,4 @@
-# txstress
+# Transaction Stress Test CLI
 
 A command-line tool for stress testing blockchain nodes with different transaction sending patterns.
 
