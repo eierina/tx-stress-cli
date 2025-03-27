@@ -14,7 +14,7 @@ A command-line tool for stress testing blockchain nodes with different transacti
 
 ```bash
 # Clone the repository
-git clone https://your-repo/txstress.git
+git clone https://github.com/eierina/tx-stress-cli.git
 cd txstress
 
 # Install dependencies
